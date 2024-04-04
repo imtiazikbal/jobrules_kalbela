@@ -1,19 +1,17 @@
 <?php
 
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
+
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\TopicController;
+
 use App\Http\Controllers\FontendController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UpazilaController;
+
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DistrictController;
-use App\Http\Controllers\DivisionController;
-use App\Http\Controllers\FeaturedController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\SubCategoryController;
 
 /*
@@ -70,50 +68,6 @@ Route::get('/subCategory/edit/{subCategory}', [SubCategoryController::class, 'ed
 Route::post('/subCategory/update/{subCategory}', [SubCategoryController::class, 'update']);
 Route::get('/subCategory/destroy/{subCategory}', [SubCategoryController::class, 'destroy']);
 
-// Featured Area
-Route::get('/featured/index', [FeaturedController::class, 'index'])->name('featured.index');
-Route::get('/create/featured', [FeaturedController::class, 'create']);
-Route::post('/store/featured', [FeaturedController::class, 'store']);
-Route::get('/edit/featured/{featured}', [FeaturedController::class, 'edit']);
-Route::post('/update/featured/{featured}', [FeaturedController::class, 'update']);
-Route::get('/destroy/featured/{featured}', [FeaturedController::class, 'destroy']);
-
-//Division Route
-Route::get('/division/index', [DivisionController::class, 'index'])->name('divisions.index');
-Route::get('/division/create', [DivisionController::class, 'create']);
-Route::post('/store/division', [DivisionController::class, 'store']);
-Route::get('/edit/division/{division}', [DivisionController::class, 'edit']);
-Route::post('/update/division/{division}', [DivisionController::class, 'update']);
-Route::get('/destroy/division/{division}', [DivisionController::class, 'destroy']);
-
-//District
-Route::get('/district/index', [DistrictController::class, 'index'])->name('districts.index');
-Route::get('/create/district', [DistrictController::class, 'create']);
-Route::post('/store/district', [DistrictController::class, 'store']);
-Route::get('/edit/district/{district}', [DistrictController::class, 'edit']);
-Route::post('/update/district/{district}', [DistrictController::class, 'update']);
-Route::get('/destroy/district/{district}', [DistrictController::class, 'destroy']);
-
-//Upazila Route
-Route::get('/upazila/index', [UpazilaController::class, 'index'])->name('upazilas.index');
-Route::get('/create/upazila', [UpazilaController::class, 'create']);
-Route::post('/store/upazila', [UpazilaController::class, 'store']);
-Route::get('/edit/upazila/{upazila}', [UpazilaController::class, 'edit']);
-Route::post('/update/upazila/{upazila}', [UpazilaController::class, 'update']);
-Route::get('/destroy/upazila/{upazila}', [UpazilaController::class, 'destroy']);
-
-//Topic Route
-
-Route::get('/topic/index', [TopicController::class, 'index'])->name('topic.index');
-Route::get('/create/topic', [TopicController::class, 'create']);
-Route::post('/store/topic', [TopicController::class, 'store']);
-Route::get('/edit/topic/{topic}', [TopicController::class, 'edit']);
-Route::post('/update/topic/{topic}', [TopicController::class, 'update']);
-Route::delete('/destroy/topic/{topic}', [TopicController::class, 'destroy']);
-
-
-
-
 
 //News Route
 Route::get('/admin/news', [NewsController::class, 'index'])->name('news.index');
@@ -123,11 +77,24 @@ Route::get('/edit/news/{news}', [NewsController::class, 'edit']);
 Route::post('/update/news/{news}', [NewsController::class, 'update']);
 Route::delete('/destroy/news/{news}', [NewsController::class, 'destroy']);
 
+
+//Jobs Route
+Route::get('/admin/jobs', [JobController::class, 'index'])->name('job.index');
+Route::get('/create/jobs',[JobController::class, 'create'])->name('create.job');
+Route::post('/store/jobs', [JobController::class, 'store'])->name('store.job');
+Route::get('/edit/jobs/{jobs}', [JobController::class, 'edit'])->name('edit.job');
+Route::post('/update/jobs/{jobs}', [JobController::class, 'update'])->name('update.job');
+Route::delete('/destroy/jobs/{jobs}', [JobController::class, 'destroy'])->name('destroy.job');
+
+
+
 //site logo Update
 Route::get('/index/logo', [AdminController::class, 'indexLogo'])->name('indexLogo');
 Route::get('/create/logo', [AdminController::class, 'createLogo'])->name('createLogo');
 Route::post('/store/logo', [AdminController::class, 'storeLogo'])->name('storeLogo');
 });
+
+
 // lead news 
 Route::get('/featuredNews', [FontendController::class, 'featuredNews'])->name('featuredNews');
 
@@ -135,10 +102,8 @@ Route::get('/featuredNews', [FontendController::class, 'featuredNews'])->name('f
 // get news by categorye
 Route::get('/admin/get-news-by-category/{category_id}', [FontendController::class, 'getNewsByCategory'])->name('newsByCategory');
 
-
 // get news by title id
 Route::get('/news/{news}', [FontendController::class, 'getNewsByTitle'])->name('newsByTitle');
-
 
 
 require __DIR__.'/auth.php';

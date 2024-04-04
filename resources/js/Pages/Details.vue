@@ -4,16 +4,20 @@
         Link
     } from '@inertiajs/vue3';
     import NavBar from '../Components/Header/Navbar.vue';
+    import FontendLayout from '@/Layouts/FontendLayout.vue';
+    import LeftSideBar_1 from '../Components/LeftSide/LeftSidebar_1.vue';
 
     defineProps({
         news: Object,
         relatedNews: Object
     })
+
 </script>
 
 
 <template>
-    <NavBar />
+    <FontendLayout>
+ 
     <!-- Breadcrumb Breadcrumb -->
     <!-- <section class="bg-light">
         <div class="container p-0">
@@ -34,7 +38,14 @@
 
         <div class="container py-5">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-2  cbr-1">
+                    <div class="row sidebarsection">
+
+                        <LeftSideBar_1/>
+                    </div>
+
+                </div>
+                <div class="col-md-6 cbr-1">
                     <div class="catInfo bb">
                         <h2 class="py-1"><span>{{ news . category . cName }}</span></h2>
                         <h2 class="py-2">{{ news . title }}</h2>
@@ -107,7 +118,7 @@
 
         <!-- @include('fontend.component.popular') -->
 
-
+    </FontendLayout>
 
 
 </template>

@@ -10,6 +10,7 @@
 
     import addSection_1 from '../Components/RightSide/AddSection_1.vue';
     import RightSection_1 from '../Components/RightSide/RightSection_1.vue';
+    import FontendLayout from '@/Layouts/FontendLayout.vue';
     import SearchForm from '../Components/Search/Search.vue';
 
     defineProps({
@@ -25,14 +26,9 @@
     })
 </script>
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <NavBar />
-            </div>
-        </div>
-  
-                    <!-- <div class="container-fluid cbackgraund">
+    <FontendLayout>
+        <div class="container">
+            <!-- <div class="container-fluid cbackgraund">
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-center py-3">
                                 <a href=""><img src="https://tpc.googlesyndication.com/simgad/1409315922313000973"
@@ -42,46 +38,39 @@
                     </div> -->
 
 
-                    <!-- <SearchForm/> -->
+            <!-- <SearchForm/> -->
 
-        <div class="row g-3 py-5">
-            <div class="col-md-3 cbr-1">
-                <div class="row sidebarsection">
-               
-                <LeftSideBar_1 :news="rajnitiCategoryNews" />
-            </div>
+            <div class="row g-3 py-5">
+                <div class="col-md-2  cbr-1">
+                    <div class="row sidebarsection">
 
-            </div>
-            <div class="col-md-6 cbr-1 px-3">
-                <div class="row mainsection">
-                    <MainSection_1 :news="news" />
-                </div>
-                <div class="row mb-3 d-flex justify-content-space-between bb cbt py-3 mainsection2">
-                    <MainSection_2 :newsSkip1Take2="newsSkip1Take2" />
+                        <LeftSideBar_1/>
+                    </div>
 
                 </div>
-                <div class="row pt-3 pb-3 bb">
-                    <MainSection_3 :newsSkip3Take3="newsSkip3Take3" />
+                <div class="col-md-7 col-sm-12 cbr-1 px-3">
+                    <div class="row mainsection">
+                     
+                            <h2 class="text-center text-uppercase text-black py-1">Government Jobs</h2>
+                        
+                    </div>
+
+
 
                 </div>
-                <div class="row pt-3">
-                    <MainSection_3 :newsSkip3Take3="newsSkip3Take3" />
-
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="row">
-                    <addSection_1 />
-                    <div class="col-md-12">
-                        <RightSection_1 />
+                <div class="col-md-3">
+                    <div class="row">
+                        <addSection_1 />
+                        <div class="col-md-12">
+                            <RightSection_1 />
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
-    
-
-    </div>
-
+    </FontendLayout>
 
 </template>
 
@@ -414,16 +403,15 @@
 
     @media screen and (max-width: 768px) {
         .sidebarsection {
-           display: none;
+            display: none;
         }
-        .mainsection2 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+
+        .mainsection{
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+
     }
-       
-        
-    }
-  
 </style>

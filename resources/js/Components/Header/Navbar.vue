@@ -41,6 +41,7 @@
                         </path>
                     </svg>
                 </button>
+                
             </div>
         </form>
     </div>
@@ -102,10 +103,11 @@
         style="background:#eee; box-shadow: 0 .2rem .2rem rgba(0,0,0,.15) !important; padding-bottom: 0rem;">
         <a class="navbar-brand" href="">
             <Link href="/">
-            <img :src="'/' + $page.props.logo.logo" width="140px" style="" alt="">
+            <!-- <img :src="'/' + $page.props.logo.logo" width="140px" style="" alt=""> -->
+            <h2>জব রুলস</h2>
             </Link>
         </a>
-        <button class="navbar-toggler navbar-light border-0 mt-1 p-0" type="button" data-toggle="collapse"
+        <button  class="navbar-toggler navbar-light border-0 mt-1 p-0" type="button" data-toggle="collapse"
             data-trigger="#navbar_main" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" style="font-size:26px; padding:0px!important;"></span>
         </button>
@@ -116,7 +118,8 @@
             <div class="row d-flex justify-content-between py-3" style="color: #ddd;">
                 <div class="col-2 d-flex align-items-center">
                     <Link href="/">
-                    <img :src="'/' + $page.props.logo.logo" width="100%" style="" alt="">
+                        <h2 style="font-size: 54px; color: #000;">জব রুলস</h2>
+                    <!-- <img :src="'/' + $page.props.logo.logo" width="100%" style="" alt=""> -->
                     </Link>
                 </div>
 

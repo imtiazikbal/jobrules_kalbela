@@ -101,4 +101,13 @@ class SubCategoryController extends Controller
 
 
     }
+
+        function getCategory(Request $request){
+            $data = Category::where('status',true)->get();
+            return response()->json($data);
+        }
+    function getSubCategory(Request $request){
+        $data = SubCategory::where('category_id', $request->id)->get();
+        return response()->json($data);
+    }
 }

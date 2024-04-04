@@ -23,9 +23,9 @@ class NewsController extends Controller
     {
 
         if(auth()->user()->role == 'admin'){
-            $news = News::with('category','division','district','upazila','user')->where('status','published')->get();
+            $news = News::with('category')->where('status','published')->get();
         }else{
-            $news = News::with('category','division','district','upazila','user')->where('status','published')->where('user_id',auth()->user()->id)->get();
+            $news = News::with('category')->where('status','published')->where('user_id',auth()->user()->id)->get();
             
         }
      // return $news;
@@ -39,15 +39,8 @@ class NewsController extends Controller
     public function create()
     {
         $category = Category::all();
-        $subcategory = SubCategory::all();
-        $division = Division::all();
-        $district = District::all();
-        $upazila = Upazila::all();
-        $featured = Featured::all();
-        $topic = Topic::all();
-        
     //    return view('backend.news.create',compact('category','subcategory','division','district','upazila','featured','topic'));
-    return Inertia::render('News/Create',['division' => $division,'category' => $category,'subcategory' => $subcategory,'district' => $district,'upazila' => $upazila,'featured' => $featured,'topic' => $topic]);
+    return Inertia::render('News/Create',['category' => $category]);
    
 }
 
@@ -105,14 +98,8 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $category = Category::all();
-        $subcategory = SubCategory::all();
-        $division = Division::all();
-        $district = District::all();
-        $upazila = Upazila::all();
-        $featured = Featured::all();
-        $topic = Topic::all();
-        return Inertia::render('News/Edit',['division' => $division,'news' => $news,'category' => $category,'subcategory' => $subcategory,'district' => $district,'upazila' => $upazila,'featured' => $featured,'topic' => $topic]);
+
+        return Inertia::render('News/Edit',['news' => $news]);
 
        
     }

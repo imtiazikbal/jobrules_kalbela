@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\SubCategoryController;
+use App\Models\SubCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,8 @@ use App\Http\Controllers\DistrictController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/getDivision',[DistrictController::class,'getDivision']);
-Route::get('/getDistrict/{division_id}',[DistrictController::class,'getDistrict']);
-Route::get('/getUpazila/{district_id}',[DistrictController::class,'getUpazila']);
+Route::get('/getCategory',[SubCategoryController::class,'getCategory']);
+Route::get('/getSubCategory/{id}',[SubCategoryController::class,'getSubCategory']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

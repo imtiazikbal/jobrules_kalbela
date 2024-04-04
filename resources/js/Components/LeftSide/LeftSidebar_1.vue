@@ -1,29 +1,41 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+    import {
+        Link
+    } from '@inertiajs/vue3';
 
 
-defineProps({
-    news: Object
-})
+    defineProps({
+        news: Object
+    })
 </script>
 <template>
-    
-                    <Link  :href="route('newsByTitle', { news: news.id })" class="col-12">
-                        <div class="headNews d-flex">
-                         <h2>{{ news.title }}</h2>
-                            <img :src=" '/' + news.image" alt="responsive image" width="100px" height="67px">
-                         </div>
-                             <div class="headNews_body mb-2">
-                                 <h2 v-html="news.nBody.substr(0, 100)">  
-                                 </h2>                    
-                             </div>
-                            </Link >
-               
+
+
+
+
+        <div class="">
+			<h4 class="p-2 bg-primary text-white">Category</h4>
+
+            <ul class="nav-item p-0 pl-3">
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+                <a href="#" class="nav-link border-bottom p-2 text-secondary">Category 1</a>
+            </ul>
+        </div>
+
+
+
+
 </template>
 
 <style scoped>
-.headNews h2{
-    font-weight: 500;
-    font-size: 16px;
-}
+    .headNews h2 {
+        font-weight: 500;
+        font-size: 16px;
+    }
 </style>

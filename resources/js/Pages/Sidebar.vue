@@ -66,7 +66,7 @@ id="drawer-navigation"
         <span class="ml-3">Overview</span>
       </a>
     </li>
-    <li>
+    <!-- <li>
       <button
         type="button"
         class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -126,7 +126,7 @@ id="drawer-navigation"
           >
         </li>
       </ul>
-    </li>
+    </li> -->
     <li>
       <button
         type="button"
@@ -172,16 +172,16 @@ id="drawer-navigation"
             >All Category</Link
           >
         </li>
-        <li>
+        <!-- <li>
           <Link
             href="/subCategory/index"
             class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >Sub Category</Link
           >
-        </li>
+        </li> -->
       </ul>
     </li>
-    <li>
+    <!-- <li>
       <Link
         href="/featured/index"
         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -207,8 +207,8 @@ id="drawer-navigation"
           4
         </span>
       </Link>
-    </li>
-    <li>
+    </li> -->
+    <!-- <li>
       <Link
         href="/topic/index"
         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -234,8 +234,8 @@ id="drawer-navigation"
           4
         </span>
       </Link>
-    </li>
-    <li>
+    </li> -->
+    <!-- <li>
       <button
         type="button"
         class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -295,10 +295,11 @@ id="drawer-navigation"
           >
         </li>
       </ul>
-    </li>
+    </li> -->
     <li>
       <Link
-        href="/admin/news"
+    
+        :href="route('job.index')"
         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
       >
         <svg
@@ -315,7 +316,7 @@ id="drawer-navigation"
             clip-rule="evenodd"
           ></path>
         </svg>
-        <span class="ml-3">News</span>
+        <span class="ml-3">Jobs</span>
       </Link>
     </li>
   </ul>

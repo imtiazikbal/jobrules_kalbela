@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('upazilas', function (Blueprint $table) {
+        Schema::create('job_positions', function (Blueprint $table) {
             $table->id();
-            $table->string('upazila_name');
-            $table->unsignedBigInteger('district_id')->nullable();
-            $table->foreign('district_id')->references('id')->on('districts')->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('upazilas');
+        Schema::dropIfExists('job_positions');
     }
 };
