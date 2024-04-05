@@ -2,8 +2,10 @@
     import {
         Link
     } from '@inertiajs/vue3'
+
+
     defineProps({
-        newsSkip3Take3: Object
+        gov_job: Object
     })
 </script>
 
@@ -11,11 +13,10 @@
 
 
 
-    <Link class="col-md-4 col-12 d-block mt-3" :href="route('newsByTitle', { news: news.id })"  v-for="news in newsSkip3Take3"
-        :key="news.id">
+    <Link class="col-md-3 col-12 d-block mt-3" v-for="gov_job in gov_job" :key="gov_job.id">
     <div class="mainSecond">
-        <img :src="'/' + news.image" alt="" width="100%">
-        <h2 class="mt-3">{{ news . title }}</h2>
+        <img :src="'/' + gov_job.image" width="100%">
+        <h2 class="mt-3">{{ gov_job . title }}</h2>
     </div>
     </Link>
 

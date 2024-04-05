@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use App\Models\Job;
 use App\Models\News;
 use Inertia\Inertia;
 use App\Helper\Bengali;
@@ -19,26 +20,10 @@ class FontendController extends Controller
         date_default_timezone_set('Asia/Dhaka');
         $dateNew = date('j F Y, h:i A');
         $date = Bengali::bn_date_time($dateNew); // ১০ জানুয়ারি ২০২৫
-        // all category here
-
-
-
-        // main featured news 1
-
-       
-
-        // Create a DateTime object from the date string
-       
-        // main fetured news skip 1 take 2
-        $newsSkip1Take2 = News::latest()->skip(1)->take(2)->get();
-        // Format the date
-        $newsSkip3Take3 = News::latest()->skip(3)->take(3)->get();
-
-
-        //Rajniti Category News
+        $gov_job = Job::where('job_position_id',"1")->latest()->limit(4)->get();
      
      
-        return Inertia::render('Home');
+        return Inertia::render('Home',['gov_job' => $gov_job]);
      // return $newsOfBangladeshCategory;
     }
 

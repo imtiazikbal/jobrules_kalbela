@@ -27,7 +27,9 @@
     defineProps({
 
         sub_category: Object,
-        job_potion: Object,
+        category: Object,
+        job_position: Object
+
 
 
     })
@@ -55,13 +57,13 @@
 
 
 
-    const category = () => {
-        axios
-            .get('/api/getCategory')
-            .then((response) => {
-                categoryFormApi.value = response.data;
-            });
-    };
+    // const category = () => {
+    //     axios
+    //         .get('/api/getCategory')
+    //         .then((response) => {
+    //             categoryFormApi.value = response.data;
+    //         });
+    // };
 
     const subCategory = (e) => {
         let selectedCategory = e.target.value
@@ -78,7 +80,7 @@
 
 
     onMounted(() => {
-        category(),
+        // category(),
             subCategory()
 
     });
@@ -165,12 +167,13 @@
                             <div class="row">
                                 <div class="col-md-12 px-2">
                                     <div class="category">
+                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                         <select v-model="form.category_id" @change="(e) => subCategory(e)"
                                             class="form-select rounded-pill mb-3" aria-label="Default select example" required>
-                                            <option disabled selected="">Category</option>
+                                           
 
-                                            <option v-for="category in categoryFormApi" :key="category.id"
-                                                :value="category.id">{{ category . cName }}</option>
+                                            <option v-for="category in category" :key="category.id"
+                                                :value="category.id">{{ category .cName }}</option>
 
                                         </select>
                                     </div>
@@ -179,9 +182,11 @@
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
-                                        <select name="" id=""
+                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sub Category</label>
+
+                                        <select v-model="form.sub_category_id"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3" required>
-                                            <option selected disabled value="">Sub Category</option>
+                                         
                                             <option v-for="sub_category in sub_categoryFromApi" :key="sub_category.id"
                                                 :value="sub_category.id">{{ sub_category . sub_category_name }}</option>
                                         </select>
@@ -190,18 +195,27 @@
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
+                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Type</label>
+
                                         <select name="" id="" v-model="form.job_position_id" required
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                            <option selected disabled value="">Job Position</option>
+                                         
+                                            <option v-for="jobtype in job_position" :key="jobtype.id"
+                                                :value="jobtype.id">{{ jobtype.position_name }}</option>
+                                           
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
+                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Scroll</label>
+
                                         <select name="" id="" v-model="form.scroll"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                            <option selected disabled value="">Job Scroll</option>
+                                     
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
 
                                         </select>
                                     </div>
@@ -210,9 +224,13 @@
 
                                 <div class="col-md-12 px-2">
                                     <div class="category"> 
+                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Status</label>
+
                                         <select name="" id="" v-model="form.status"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                            <option selected disabled value="">Job Status</option>
+                                       
+                                            <option value="1">Active</option>
+                                            <option value="0">Un Active</option>
 
                                         </select>
                                     </div>

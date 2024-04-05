@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\JobPosition;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class JobController extends Controller
      */
     public function index()
     {
-       return Inertia::render('Job/Index');
+        $jobs = Job::with('category','subcategory','job_position')->get();
+       return Inertia::render('Job/Index',['jobs' => $jobs]);
         
     }
 
@@ -24,10 +26,11 @@ class JobController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
+       $job_position = JobPosition::all();
         $sub_category = SubCategory::where('status',true)->get();
+        $category = Category::where('status',true)->get();
   
-    return Inertia::render('Job/Create',['category' => $category, 'sub_category' => $sub_category]);
+    return Inertia::render('Job/Create',['job_position' => $job_position, 'sub_category' => $sub_category, 'category' => $category]);
     }
 
     /**
@@ -35,7 +38,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+       // dd($request->all());
         $img = $request->file('image');
         $t = time();
         $file_name = $img->getClientOriginalName();
@@ -46,9 +49,8 @@ class JobController extends Controller
 
           Job::create([
             'title'=>$request->title,
-            'des'=>$request->nBody,
+            'des'=>$request->des,
             'image'=>$img_url,
-           
             'category_id'=>$request->category_id,
             'sub_category_id'=>$request->sub_category_id,
             'job_position_id'=>$request->job_position_id,
@@ -57,7 +59,7 @@ class JobController extends Controller
             'status'=>$request->status,
             'scroll'=>$request->scroll
         ]);
-        return redirect('/admin/news')->with('success', 'News created successfully');
+        return redirect('/admin/jobs')->with('success', 'Jobs created successfully');
     }
 
     /**

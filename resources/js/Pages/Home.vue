@@ -14,14 +14,8 @@
     import SearchForm from '../Components/Search/Search.vue';
 
     defineProps({
-        category: Object,
-        featured: Object,
-        news: Object,
-        newsSkip1Take2: Object,
-        newsSkip1Take2: Object,
-        newsSkip3Take3: Object,
-        rajnitiCategoryNews: Object,
-        bangladeshCategoryNews: Object
+        gov_job: Object,
+       
 
     })
 </script>
@@ -49,12 +43,14 @@
 
                 </div>
                 <div class="col-md-7 col-sm-12 cbr-1 px-3">
-                    <div class="row mainsection">
-                     
-                            <h2 class="text-center text-uppercase text-black py-1">Government Jobs</h2>
-                        
+                  
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-uppercase text-black py-1 text-1xl">ক্যাটাগরি বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানের আইন ও বিধি বিধান</h2>
+                       <button> আরও</button>
                     </div>
-
+                    <div class="row">
+                        <MainSection_3 :gov_job="gov_job" />        
+                    </div>
 
 
                 </div>

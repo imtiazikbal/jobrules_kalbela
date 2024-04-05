@@ -23,13 +23,15 @@ class ShareDataMiddleware
         $headerData = Category::all(); // Fetch header data from the database
         $feturedNews= News::latest()->skip(1)->take(3)->get(); // Fetch header data from the database
         $siteLogo =  MainAssets::first();
+        $subCategory = SubCategory::all();
       
     
         // Share header data with Inertia
         Inertia::share([
             'feturedNews' => $feturedNews,
             'headerData' => $headerData,
-            'logo'=>$siteLogo
+            'logo'=>$siteLogo,
+            'subCategory'=>$subCategory
         ]);
         return $next($request);
     }

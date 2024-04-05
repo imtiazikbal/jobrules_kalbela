@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('job_position_id');
             $table->foreign('job_position_id')->references('id')->on('job_positions')->onDelete('cascade');
-
+            
             $table->string('job_link')->nullable();
             $table->string('job_video')->nullable();
             $table->boolean('scroll')->default(1);

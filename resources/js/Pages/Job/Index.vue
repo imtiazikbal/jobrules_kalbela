@@ -5,7 +5,9 @@ import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import Notification from '@/Components/Notification.vue';
 
-
+defineProps({
+  jobs: Object
+})
 
 // const form = reactive({
 //   image_path :  '',
@@ -53,12 +55,12 @@ import Notification from '@/Components/Notification.vue';
     <div class="rounded-t mb-0 px-4 py-3 border-0">
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1 ">
-          <h3 class="font-semibold text-lg text-white">News</h3>
+          <h3 class="font-semibold text-lg text-white">Job</h3>
           <Link   :href="route('create.job')" type="button" class="inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow">
           <svg class="mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" class=""></path>
           </svg>
-Add News
+Add Job
         </Link>
         </div>
       </div>
@@ -67,9 +69,11 @@ Add News
       <table class="items-center w-full bg-transparent border-collapse">
         <thead>
           <tr>
+            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Image</th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Titile</th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Body</th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Category</th>
+            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Type</th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Status</th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700">Action </th>
             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-pink-800 text-pink-300 border-pink-700"></th>
@@ -77,29 +81,25 @@ Add News
         </thead>
 
         <tbody>
-          <tr v-for="news in news" :key="news.id">
+          <tr v-for="job in jobs" :key="job.id">
             <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-              <img src="" class="h-12 w-12 bg-white rounded-full border" alt="..."></th>
+              <img :src="'/'+job.image" class="h-12 w-12 bg-white rounded-full border" alt="..."></th>
             
-            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"></td>
-            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4" ></td>
-            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">   </td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ job.title }}</td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"  v-html="job.des.substr(0, 50)"></td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ job.category.cName }}</td>
+            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">{{ job.job_position.position_name }}</td>
+          
+
             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-              <i class="fas fa-circle text-orange-500 mr-2"></i></td>
+              <i class="fas fa-circle text-orange-500 mr-2"></i> {{ job.status==1?'Published':'Unpublished' }}</td>
            
-            
-              <td class="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                <div class="inline-flex items-center rounded-full bg-blue-600 py-2 px-3 text-xs text-white"></div>
-              </td>
-              <td class="hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                <Link  :href="`/edit/news/${news.id}`" class="btn btn-primary">Edit</Link>
-                </td>
-                <td class="hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">
-                <Link method="delete"  :href="`/destroy/news/${news.id}`" class="btn btn-primary">Delete</Link>
-                 
-                
-    
-                </td>
+            <td>
+              <Link  :href="`/edit/job/${job.id}`" class="btn btn-primary mr-2">Edit</Link>
+              <Link  :href="`/edit/job/${job.id}`" class="btn btn-danger">Delete</Link>
+
+            </td>
+          
           </tr>
 
      
