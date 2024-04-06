@@ -8,18 +8,22 @@
     import LeftSideBar_1 from '../Components/LeftSide/LeftSidebar_1.vue';
 
     defineProps({
-        news: Object,
+        jobs: Object,
         relatedNews: Object
     })
 
+
+    const openNewTab = (url) => {
+        window.open(url, '_blank');
+    };
 </script>
 
 
 <template>
     <FontendLayout>
- 
-    <!-- Breadcrumb Breadcrumb -->
-    <!-- <section class="bg-light">
+
+        <!-- Breadcrumb Breadcrumb -->
+        <!-- <section class="bg-light">
         <div class="container p-0">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-light pb-1 pt-2 ">
@@ -34,45 +38,52 @@
     </section> -->
 
 
-    <!-- Details aria Start -->
+        <!-- Details aria Start -->
 
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-2  cbr-1">
                     <div class="row sidebarsection">
 
-                        <LeftSideBar_1/>
+                        <LeftSideBar_1 />
                     </div>
 
                 </div>
-                <div class="col-md-6 cbr-1">
+                <div class="col-md-8 cbr-1">
                     <div class="catInfo bb">
-                        <h2 class="py-1"><span>{{ news . category . cName }}</span></h2>
-                        <h2 class="py-2">{{ news . title }}</h2>
-                        <h3 class="py-3"><span>বিনোদন প্রতিবেদক</span></h3>
+                        <h2 class="py-1"><span>{{ jobs . category_name }}</span></h2>
+                        <h2 class="py-2">{{ jobs . title }}</h2>
+
                         <div class="newsPostAndShre d-flex justify-content-between">
                             <div>
-                                <h2><span>প্রকাশ:{{ news . created_at }}</span></h2>
+                                <h2><span class="text-muted">প্রকাশ: {{ jobs . created_at }}</span></h2>
 
                             </div>
-                            <div class="ShareButton d-flex">
-                                <li><a href="">Facebook</a></li>
-                                <li><a href="">Twitter</a></li>
-                                <li><a href="">Font plus</a></li>
-                                <li><a href="">Font Minus</a></li>
-                                <li><a href="">Print</a></li>
-                            </div>
+
                         </div>
                     </div>
                     <div class="newsDetails py-5 d-flex flex-column justify-content-center align-items-center ">
-                        <img :src="'/' + news.image" width="50%" alt="responsive image">
-                        <h3 class="bb mt-1">{{ news . nCaption }}<span>
-                            </span></h3>
+                        <img :src="'/' + jobs.image" width="50%" alt="responsive image">
 
-                        <h2 class="py-3" v-html="news.nBody"></h2>
+
+
+                        <h2 class="py-3" v-html="jobs.des"></h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="apply_btn">
+                                <template v-if="jobs.apply_link">
+                                    <button @click="openNewTab(jobs.apply_link)" class="btn btn-primary">Apply
+                                        Online</button>
+                                </template>
+                                <template v-else>
+                                    <!-- Render whatever content you want when there is no apply link -->
+                                </template>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 d-flex flex-column align-items-center position-sticky top-0">
+                <div class="col-md-2 d-flex flex-column align-items-center position-sticky top-0">
                     <div class="detailsSideBar">
                         <div class="detailsAdd1">
                             <img src="https://tpc.googlesyndication.com/simgad/18288574991889935630" alt="">
@@ -84,7 +95,7 @@
 
 
 
-                    <Link class="relatedNew pt-3" v-for="news1 in relatedNews.news" :key="news1.id"
+                    <!-- <Link class="relatedNew pt-3" v-for="news1 in relatedNews.news" :key="news1.id"
                         :href="route('newsByTitle', { news: news1.id })">
 
                     <h2>{{ news1 . title }}</h2>
@@ -95,12 +106,12 @@
                         <img :src="'/' + news1.image" alt="" width="30%">
 
                     </div>
-                    </Link>
+                    </Link> -->
                     <div class="detailsSideBar py-2">
                         <div class="detailsAdd1">
                             <img src="https://tpc.googlesyndication.com/simgad/18288574991889935630" alt="">
                         </div>
-                        
+
                     </div>
 
 
@@ -202,6 +213,7 @@
     .newsPostAndShre h2 span {
         color: var(--secondary-color);
         font-size: 16px;
+        font-weight: normal;
     }
 
     .newsDetails h3 span {

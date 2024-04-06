@@ -6,6 +6,7 @@ use Closure;
 use App\Models\News;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\Job;
 use App\Models\MainAssets;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class ShareDataMiddleware
         $feturedNews= News::latest()->skip(1)->take(3)->get(); // Fetch header data from the database
         $siteLogo =  MainAssets::first();
         $subCategory = SubCategory::all();
+        $scoll = Job::where('scroll','1')->get();
       
     
         // Share header data with Inertia
@@ -31,7 +33,8 @@ class ShareDataMiddleware
             'feturedNews' => $feturedNews,
             'headerData' => $headerData,
             'logo'=>$siteLogo,
-            'subCategory'=>$subCategory
+            'subCategory'=>$subCategory,
+            'scoll'=>$scoll
         ]);
         return $next($request);
     }

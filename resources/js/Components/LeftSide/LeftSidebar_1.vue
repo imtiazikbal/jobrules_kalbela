@@ -16,7 +16,7 @@
 
             <ul class="nav-item p-0 pl-3" v-for="sub_category in $page.props.subCategory" :key="sub_category.id">
                 
-                <Link href="#" class="nav-link border-bottom p-2 text-secondary">{{ sub_category.sub_category_name }}</Link>
+                <Link  :href="route('newsBySubCategory', { subcategory: sub_category.id })" class="nav-link border-bottom p-2 text-secondary">{{ sub_category.sub_category_name }}</Link>
             </ul>
         </div>
 
@@ -26,6 +26,10 @@
 </template>
 
 <style scoped>
+.active {
+  color: blue;
+  background: #000;
+}
     .headNews h2 {
         font-weight: 500;
         font-size: 16px;

@@ -1,44 +1,29 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
-defineProps({
-   newsSkip1Take2: Object
-})
+    import {
+        Link
+    } from '@inertiajs/vue3'
 
 
+    defineProps({
+        gov_job: Object
+    })
 </script>
 
 <template>
-    <div class="col-6 cbr-2 mainsection2" v-for="news in newsSkip1Take2" :key="news.id">
-        <Link :href="route('newsByTitle', { news: news.id })" class="main_section1_image mr-3 d-block">
-
-        <div class="main_section1_content_image_title d-flex justify-content-space-between">
-            <h2 class="d-block">{{ news.title }}</h2>
-            <img :src="'/' + news.image"
-                alt="Responsive image" width="50px">
-        </div>
-
-        <div>
-            <h3 class="main_section1_content_body mt-3" v-html="news.nBody.substr(0, 300)"></h3>
-            <span class="d-block mt-3"></span>
-        </div>
+<!-- বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানেরjob নিয়োগ বিজ্ঞপ্তি -->
 
 
 
-
-
-        </Link>
+    <Link :href="route('jobsByTitle', { job: job.id })" class="col-md-3 col-12 d-block mt-3" v-for="job in gov_job" :key="job.id">
+    <div class="mainSecond">
+        <img :src="'/' + job.image" width="100%">
+        <h2 class="mt-3">{{ job . title }}</h2>
     </div>
+    </Link>
+
+
 </template>
 
 <style scoped>
 
-    .main_section1_content_image_title img {
-        width: 100px;
-        height: 100px;
-    }
-
-    .main_section1_content_image_title h2 {
-        font-size: var(--primary-heading);
-        font-weight: 500;
-    }
 </style>

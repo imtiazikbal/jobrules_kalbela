@@ -1,4 +1,5 @@
 <script setup>
+
     import NavBar from '../Components/Header/Navbar.vue';
     import LeftSideBar_1 from '../Components/LeftSide/LeftSidebar_1.vue';
     import LeftSideBar_2 from '../Components/LeftSide/LeftSidebar_2.vue';
@@ -12,9 +13,13 @@
     import RightSection_1 from '../Components/RightSide/RightSection_1.vue';
     import FontendLayout from '@/Layouts/FontendLayout.vue';
     import SearchForm from '../Components/Search/Search.vue';
+    import { Link } from '@inertiajs/vue3'
 
     defineProps({
         gov_job: Object,
+        gov_non_gov_law: Object,
+        land_law: Object,
+        pc_tips: Object
        
 
     })
@@ -42,23 +47,64 @@
                     </div>
 
                 </div>
-                <div class="col-md-7 col-sm-12 cbr-1 px-3">
+                <div class="col-md-8 col-sm-12 cbr-1 px-3">
                   
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="text-uppercase text-black py-1 text-1xl">ক্যাটাগরি বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানের আইন ও বিধি বিধান</h2>
-                       <button> আরও</button>
+                   
+                    <div class="row">
+                        <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-uppercase text-black py-1 text-2xl font-bold">বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানের আইন ও বিধি বিধান</h2>
+                       <button> <Link :href="route('newsByType', { type: 3 })">আরও</Link></button>
+                     </div>
+                        <MainSection_1 :gov_non_gov_law="gov_non_gov_law" />        
+                           
+                    </div> 
+                    <div class="row">
+                        <div class="col-12 py-3">
+                          <a href=""><img src="https://tpc.googlesyndication.com/simgad/1409315922313000973" alt=""></a>
+                        </div>
+                    </div>
+
+                 <div class="row mt-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-uppercase text-black py-1 text-2xl font-bold">	বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানের নিয়োগ বিজ্ঞপ্তি </h2>
+                       <button> <Link :href="route('newsByType', { type: 1 })">আরও</Link></button>
+                     </div>
+                        
+                        <MainSection_2 :gov_job="gov_job" />        
+                    </div>
+                    
+                  
+                    
+                    <div class="row mt-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-uppercase text-black py-1 text-2xl font-bold">জমিজমা সংক্রান্ত আইন ও বিধি বিধান</h2>
+                       <button> <Link :href="route('newsByType', { type: 4 })">আরও</Link></button>
+                     </div>
+                        
+                        <MainSection_3 :land_law="land_law" />        
+                    </div> 
+                    <div class="row">
+                        <div class="col-12 py-3">
+                          <a href=""><img src="https://tpc.googlesyndication.com/simgad/1409315922313000973" alt=""></a>
+                        </div>
                     </div>
                     <div class="row">
-                        <MainSection_3 :gov_job="gov_job" />        
+                        <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-uppercase text-black py-1 text-2xl font-bold">কম্পিউটার (পিসি) হেল্প ও বিভিন্ন টিপস</h2>
+                       <button> <Link :href="route('newsByType', { type: 5 })">আরও</Link></button>
+                     </div>
+                        
+                        <MainSection_4 :pc_tips="pc_tips" />        
                     </div>
 
 
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="row">
-                        <addSection_1 />
+                        <RightSection_1 />
                         <div class="col-md-12">
-                            <RightSection_1 />
+                           
+                            <addSection_1 />
                         </div>
                     </div>
                 </div>

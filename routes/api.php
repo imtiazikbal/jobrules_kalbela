@@ -17,6 +17,7 @@ use App\Models\SubCategory;
 |
 */
 Route::get('/getCategory',[SubCategoryController::class,'getCategory']);
+Route::get('/getSubCategory',[SubCategoryController::class,'subCategory']);
 Route::get('/getSubCategory/{id}',[SubCategoryController::class,'getSubCategory']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

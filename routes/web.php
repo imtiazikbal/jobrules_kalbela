@@ -37,73 +37,77 @@ use App\Http\Controllers\SubCategoryController;
 Route::get('/', [FontendController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
-  
     return Inertia::render('Dashboard');
-   
-   
-})->middleware(['auth', 'verified','admin'])->name('dashboard');
+})
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Admin midlreware
 
-// Admin midlreware
+    // Category Route
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/category/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::post('/category/update/{category}', [CategoryController::class, 'update']);
+    Route::get('/category/destroy/{category}', [CategoryController::class, 'destroy']);
 
-// Category Route
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
-Route::get('/category/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
-Route::post('/category/update/{category}', [CategoryController::class, 'update']);
-Route::get('/category/destroy/{category}', [CategoryController::class, 'destroy']);
+    //subCategory Route
 
-//subCategory Route
+    Route::get('/subCategory/index', [SubCategoryController::class, 'index'])->name('subCategories.index');
+    Route::get('/subCategory/create', [SubCategoryController::class, 'create']);
+    Route::post('/subCategory/store', [SubCategoryController::class, 'store']);
+    Route::get('/subCategory/edit/{subCategory}', [SubCategoryController::class, 'edit']);
+    Route::post('/subCategory/update/{subCategory}', [SubCategoryController::class, 'update']);
+    Route::get('/subCategory/destroy/{subCategory}', [SubCategoryController::class, 'destroy']);
 
-Route::get('/subCategory/index', [SubCategoryController::class, 'index'])->name('subCategories.index');
-Route::get('/subCategory/create', [SubCategoryController::class, 'create']);
-Route::post('/subCategory/store', [SubCategoryController::class, 'store']);
-Route::get('/subCategory/edit/{subCategory}', [SubCategoryController::class, 'edit']);
-Route::post('/subCategory/update/{subCategory}', [SubCategoryController::class, 'update']);
-Route::get('/subCategory/destroy/{subCategory}', [SubCategoryController::class, 'destroy']);
+    //News Route
+    Route::get('/admin/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/create/news', [NewsController::class, 'create']);
+    Route::post('/store/news', [NewsController::class, 'store']);
+    Route::get('/edit/news/{news}', [NewsController::class, 'edit']);
+    Route::post('/update/news/{news}', [NewsController::class, 'update']);
+    Route::delete('/destroy/news/{news}', [NewsController::class, 'destroy']);
 
+    //Jobs Route
+    Route::get('/admin/jobs', [JobController::class, 'index'])->name('job.index');
+    Route::get('/create/jobs', [JobController::class, 'create'])->name('create.job');
+    Route::post('/store/jobs', [JobController::class, 'store'])->name('store.job');
+    Route::get('/edit/jobs/{jobs}', [JobController::class, 'edit'])->name('edit.job');
+    Route::post('/update/jobs/{jobs}', [JobController::class, 'update'])->name('update.job');
+    Route::delete('/destroy/jobs/{jobs}', [JobController::class, 'destroy'])->name('destroy.job');
 
-//News Route
-Route::get('/admin/news', [NewsController::class, 'index'])->name('news.index');
-Route::get('/create/news', [NewsController::class, 'create']);
-Route::post('/store/news', [NewsController::class, 'store']);
-Route::get('/edit/news/{news}', [NewsController::class, 'edit']);
-Route::post('/update/news/{news}', [NewsController::class, 'update']);
-Route::delete('/destroy/news/{news}', [NewsController::class, 'destroy']);
-
-
-//Jobs Route
-Route::get('/admin/jobs', [JobController::class, 'index'])->name('job.index');
-Route::get('/create/jobs',[JobController::class, 'create'])->name('create.job');
-Route::post('/store/jobs', [JobController::class, 'store'])->name('store.job');
-Route::get('/edit/jobs/{jobs}', [JobController::class, 'edit'])->name('edit.job');
-Route::post('/update/jobs/{jobs}', [JobController::class, 'update'])->name('update.job');
-Route::delete('/destroy/jobs/{jobs}', [JobController::class, 'destroy'])->name('destroy.job');
-
-
-
-//site logo Update
-Route::get('/index/logo', [AdminController::class, 'indexLogo'])->name('indexLogo');
-Route::get('/create/logo', [AdminController::class, 'createLogo'])->name('createLogo');
-Route::post('/store/logo', [AdminController::class, 'storeLogo'])->name('storeLogo');
+    //site logo Update
+    Route::get('/index/logo', [AdminController::class, 'indexLogo'])->name('indexLogo');
+    Route::get('/create/logo', [AdminController::class, 'createLogo'])->name('createLogo');
+    Route::post('/store/logo', [AdminController::class, 'storeLogo'])->name('storeLogo');
 });
 
 
-// lead news 
-Route::get('/featuredNews', [FontendController::class, 'featuredNews'])->name('featuredNews');
+// get jobs by title id
+Route::get('/jobs/{job}', [FontendController::class, 'getJobsByTitle'])->name('jobsByTitle');
+
+
 
 
 // get news by categorye
-Route::get('/admin/get-news-by-category/{category_id}', [FontendController::class, 'getNewsByCategory'])->name('newsByCategory');
+Route::get('/category/{category}', [FontendController::class, 'getJobsByCategory'])->name('newsByCategory');
 
-// get news by title id
-Route::get('/news/{news}', [FontendController::class, 'getNewsByTitle'])->name('newsByTitle');
+// get news by categorye
+Route::get('/subcategory/{subcategory}', [FontendController::class, 'getJobsBySubCategory'])->name('newsBySubCategory');
+
+Route::get('/jobType/{type}', [FontendController::class, 'getJobsByType'])->name('newsByType');
 
 
-require __DIR__.'/auth.php';
+
+// lead news
+Route::get('/featuredNews', [FontendController::class, 'featuredNews'])->name('featuredNews');
+
+
+
+require __DIR__ . '/auth.php';

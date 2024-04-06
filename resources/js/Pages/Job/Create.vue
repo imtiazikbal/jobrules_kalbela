@@ -39,8 +39,8 @@
         des: null,
         image: null,
         scroll: null,
-        job_link: null,
-        video_link: null,
+        job_link: "#",
+        video_link: "#",
         category_id: null,
         sub_category_id: null,
         job_position_id: null,
@@ -139,7 +139,7 @@
                                 <div class="col-md-12 py-2">
 
 
-                                    <Editor v-model="form.des" editorStyle="height:415px" />
+                                    <Editor v-model="form.des" editorStyle="height:415px" required />
 
                                 </div>
                                 <div class="col-md-12 ">
@@ -185,7 +185,7 @@
                                         <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sub Category</label>
 
                                         <select v-model="form.sub_category_id"
-                                            class="form-control form-select bg-gray-50 border-gray-300 mt-3" required>
+                                            class="form-control form-select bg-gray-50 border-gray-300 mt-3">
                                          
                                             <option v-for="sub_category in sub_categoryFromApi" :key="sub_category.id"
                                                 :value="sub_category.id">{{ sub_category . sub_category_name }}</option>

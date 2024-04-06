@@ -5,18 +5,18 @@
 
 
     defineProps({
-        gov_job: Object
+        land_law: Object
     })
 </script>
 
 <template>
+<!-- জমিজমা সংক্রান্ত আইন ও বিধি বিধান -->
 
 
-
-    <Link class="col-md-3 col-12 d-block mt-3" v-for="gov_job in gov_job" :key="gov_job.id">
+    <Link :href="route('jobsByTitle', { job: job.id })" class="col-md-3 col-12 d-block mt-3" v-for="job in land_law" :key="job.id">
     <div class="mainSecond">
-        <img :src="'/' + gov_job.image" width="100%">
-        <h2 class="mt-3">{{ gov_job . title }}</h2>
+        <img :src="'/' + job.image" width="100%">
+        <h2 class="mt-3">{{ job . title }}</h2>
     </div>
     </Link>
 

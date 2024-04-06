@@ -140,12 +140,10 @@
         style="background: #fff !important; text-align: center!important; border-top: 1px solid #ddd; border-bottom: 2px solid #bbb5b5;">
         <div class="container d-flex justify-content-center">
             <ul id="style1stNav" class="navbar-nav">
-                <li class="nav-item style1stNav">
-                    <a class="nav-link pl-0" href="#">সর্বশেষ</a>
-                </li>
+               
                 <!-- Input Cat page start -->
                 <li class="nav-item style1stNav" v-for="category in $page.props.headerData" :key="category.id">
-                    <Link class="nav-link" :href="`/admin/get-news-by-category/${category.id }`">
+                    <Link class="nav-link" :href="route('newsByCategory', { category: category.id })">
                     {{ category . cName }}</Link>
                 </li> 
             </ul>

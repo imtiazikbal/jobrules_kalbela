@@ -2,43 +2,27 @@
     import {
         Link
     } from '@inertiajs/vue3'
+
+
     defineProps({
-       
+        gov_non_gov_law: Object
     })
 </script>
+
 <template>
 
-    <div class="col-md-12 col-12 d-flex justify-content-evenly mainSection">
-        <!-- <Link :href="route('newsByTitle', { news: news.id })" class="main_section1_image mr-3 d-block"> -->
-        <Link class="main_section1_image mr-3 d-block">
-        <img  alt="Responsive image" width="100%">
-        <span class="d-block mt-1"></span>
-        </Link>
-        <Link :href="route('newsByTitle', { news: news.id })" class="main_section1_content">
-        <h2> {{ news . title }}</h2>
-        <h3 class="mt-3" v-html="news.nBody.substr(0, 300)"> </h3>
-        <span class="d-block mt-3">{{ news . created_at }}</span>
-        </Link>
+<!-- বিভিন্ন সরকারি/বেসরকারি প্রতিষ্ঠানের আইন ও বিধি বিধান -->
+
+    <Link  :href="route('jobsByTitle', { job: job.id })" class="col-md-3 col-12 d-block mt-3" v-for="job in gov_non_gov_law" :key="job.id">
+    <div class="mainSecond">
+        <img :src="'/' + job.image" width="100%">
+        <h2 class="mt-3">{{ job.title }}</h2>
     </div>
+    </Link>
+
+
 </template>
+
 <style scoped>
-@media screen and (max-width: 768px) {
-    .mainSection {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-}
-    .main_section1_content h2 {
-        font-weight: 600;
-        font-size: 20px;
 
-    }
-
-    .main_section1_image span {
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 15px;
-    }
 </style>
