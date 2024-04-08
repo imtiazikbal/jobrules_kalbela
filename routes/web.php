@@ -4,14 +4,15 @@ use Inertia\Inertia;
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\AdminController;
-
-use App\Http\Controllers\FontendController;
-use App\Http\Controllers\ProfileController;
-
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\NewsController;
+
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FontendController;
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubCategoryController;
 
 /*
@@ -35,12 +36,13 @@ use App\Http\Controllers\SubCategoryController;
 // });
 
 Route::get('/', [FontendController::class, 'index'])->name('home');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})
-    ->middleware(['auth', 'verified', 'admin'])
-    ->name('dashboard');
+
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -78,9 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/jobs', [JobController::class, 'index'])->name('job.index');
     Route::get('/create/jobs', [JobController::class, 'create'])->name('create.job');
     Route::post('/store/jobs', [JobController::class, 'store'])->name('store.job');
-    Route::get('/edit/jobs/{jobs}', [JobController::class, 'edit'])->name('edit.job');
-    Route::post('/update/jobs/{jobs}', [JobController::class, 'update'])->name('update.job');
-    Route::delete('/destroy/jobs/{jobs}', [JobController::class, 'destroy'])->name('destroy.job');
+    Route::get('/edit/job/{jobs}', [JobController::class, 'edit'])->name('edit.job');
+    Route::post('/update/job/{job}', [JobController::class, 'update'])->name('update.job');
+    Route::get('/destroy/job/{job}', [JobController::class, 'destroy'])->name('destroy.job');
 
     //site logo Update
     Route::get('/index/logo', [AdminController::class, 'indexLogo'])->name('indexLogo');

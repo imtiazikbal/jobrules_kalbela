@@ -44,12 +44,26 @@
         category_id: null,
         sub_category_id: null,
         job_position_id: null,
-        status: null
+        status: null,
+        tag: null
 
 
 
 
     })
+    const previewImageUrl = ref('');
+
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            form.image = file; // Update the form's image value
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImageUrl.value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const sub_categoryFromApi = ref([]);
 
@@ -81,7 +95,7 @@
 
     onMounted(() => {
         // category(),
-            subCategory()
+        subCategory()
 
     });
 
@@ -90,6 +104,28 @@
     }
 
     const value = ref('<div>জব ডেসক্রিপশন এখানে লিখুন</div>');
+
+    const tags = ref(['এখানে tag লিখুন']);
+
+const addTag = (event) => {
+  event.preventDefault();
+  let val = event.target.value.trim();
+  if (val.length > 0 && !tags.value.includes(val)) {
+    tags.value.push(val);
+    event.target.value = '';
+    console.log(tags.value);
+  }
+};
+
+const removeTag = (index) => {
+  tags.value.splice(index, 1);
+};
+
+const removeLastTag = (event) => {
+  if (event.target.value.length === 0) {
+    removeTag(tags.value.length - 1);
+  }
+};
 </script>
 
 
@@ -125,8 +161,8 @@
         <main class="p-4 md:ml-64 h-auto pt-20">
             <div class="container mt-20">
                 <div class="row">
-                 
-                    <form @submit.prevent="submit"  class="d-flex form_class">
+
+                    <form @submit.prevent="submit" class="d-flex form_class">
                         <div class="col-md-8 mx-3">
                             <div class="row">
                                 <div class="col-md-12 ">
@@ -138,25 +174,39 @@
                                 </div>
                                 <div class="col-md-12 py-2">
 
+                                    <label for="">Job Body(Required)</label>
 
                                     <Editor v-model="form.des" editorStyle="height:415px" required />
 
                                 </div>
                                 <div class="col-md-12 ">
 
-
+                                    <label for="">Video link(Optional)</label>
                                     <input type="texy" id="text" v-model="form.video_link"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Job Video Link(Optional)" />
                                 </div>
-                                 <div class="col-md-12 mt-3 ">
+                                <div class="col-md-12 mt-3 ">
+                                    <label for="">Job link(Optional)</label>
 
 
                                     <input type="texy" id="text" v-model="form.job_link"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Job Link(Optional)" />
                                 </div>
-                               
+                                <div class="col-md-12 mt-3 ">
+                                    <label for="">Job Tag</label>
+                                    
+                                    <div class='tag-input'>
+                                        <div v-for='(tag, index) in tags' :key='tag' class='tag-input__tag'>
+                                            {{ tag }}
+                                            <span @click='removeTag(index)'>x</span>
+                                        </div>
+                                        <input type='text' v-model='form.tag' placeholder="Enter a Tag" class='tag-input__text border-none'
+                                            @keydown.enter='addTag' @keydown.188='addTag'
+                                            @keydown.delete='removeLastTag' />
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -167,13 +217,15 @@
                             <div class="row">
                                 <div class="col-md-12 px-2">
                                     <div class="category">
-                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                        <label for=""
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                         <select v-model="form.category_id" @change="(e) => subCategory(e)"
-                                            class="form-select rounded-pill mb-3" aria-label="Default select example" required>
-                                           
+                                            class="form-select rounded-pill mb-3" aria-label="Default select example"
+                                            required>
 
+                                            <option selected disabled value=""> Choose Category</option>
                                             <option v-for="category in category" :key="category.id"
-                                                :value="category.id">{{ category .cName }}</option>
+                                                :value="category.id">{{ category . cName }}</option>
 
                                         </select>
                                     </div>
@@ -182,11 +234,13 @@
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
-                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sub Category</label>
+                                        <label for=""
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sub
+                                            Category</label>
 
                                         <select v-model="form.sub_category_id"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                         
+
                                             <option v-for="sub_category in sub_categoryFromApi" :key="sub_category.id"
                                                 :value="sub_category.id">{{ sub_category . sub_category_name }}</option>
                                         </select>
@@ -195,25 +249,29 @@
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
-                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Type</label>
+                                        <label for=""
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job
+                                            Type</label>
 
                                         <select name="" id="" v-model="form.job_position_id" required
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                         
+
                                             <option v-for="jobtype in job_position" :key="jobtype.id"
-                                                :value="jobtype.id">{{ jobtype.position_name }}</option>
-                                           
+                                                :value="jobtype.id">{{ jobtype . position_name }}</option>
+
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 px-2">
                                     <div class="category">
-                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Scroll</label>
+                                        <label for=""
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job
+                                            Scroll</label>
 
                                         <select name="" id="" v-model="form.scroll"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                     
+
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
 
@@ -223,12 +281,14 @@
 
 
                                 <div class="col-md-12 px-2">
-                                    <div class="category"> 
-                                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Status</label>
+                                    <div class="category">
+                                        <label for=""
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job
+                                            Status</label>
 
                                         <select name="" id="" v-model="form.status"
                                             class="form-control form-select bg-gray-50 border-gray-300 mt-3">
-                                       
+
                                             <option value="1">Active</option>
                                             <option value="0">Un Active</option>
 
@@ -278,11 +338,26 @@
 
                                                 <p class="mt-4 text-center text-xl font-medium text-gray-800">
                                                     Drop Files here or
-                                                    <label
+                                                    <!-- <label
                                                         class="shadow-blue-100 mt-2 block rounded-full border bg-white px-4 py-0.5 font-normal text-blue-500 shadow hover:bg-blue-50">
                                                         <input @input="form.image = $event.target.files[0]" class="hidden" type="file" name="file"
                                                             id="" required />
-                                                        browse</label>
+                                                        browse</label>  -->
+                                                <div class="mt-3">
+
+                                                    <label
+                                                        class="shadow-blue-100 mb-2 mt-2 block rounded-full border bg-white px-4 py-0.5 font-normal text-blue-500 shadow hover:bg-blue-50">
+                                                        <input @change="handleFileInputChange" class="hidden"
+                                                            type="file" name="file" id="" required />
+                                                        Browse
+                                                    </label>
+                                                    <img :src="previewImageUrl" v-if="previewImageUrl"
+                                                        alt="Preview Image" width="100%">
+                                                </div>
+
+
+
+
                                                 </p>
                                             </div>
 
@@ -293,10 +368,10 @@
                                 <div class="col-md-12 ">
 
 
-<div class="d-grid py-2">
-    <button class="btn btn-primary text-black" type="submit">Add Job</button>
-</div>
-</div>
+                                    <div class="d-grid py-2">
+                                        <button class="btn btn-primary text-black" type="submit">Add Job</button>
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -313,3 +388,62 @@
     </AuthenticatedLayout>
 
 </template>
+<style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap');
+      
+     
+      a {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #00003a;
+      font-size: 20px;
+    }
+      
+      
+    /*tag input style*/
+      
+      .tag-input {
+        width: 50%;
+        border: 1px solid #D9DFE7;
+        background: #fff;
+        border-radius: 4px;
+        font-size: 0.9em;
+        min-height: 45px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        font-family: "Roboto";
+        margin-bottom: 10px;
+      }
+    
+      .tag-input__tag {
+        height: 24px;
+        color: white;
+        float: left;
+        font-size: 14px;
+        margin-right: 10px;
+        background-color: #667EEA;
+        border-radius: 15px;
+        margin-top: 10px;
+        line-height: 24px;
+        padding: 0 8px;
+        font-family: "Roboto";
+      }
+    
+      .tag-input__tag > span {
+        cursor: pointer;
+        opacity: 0.75;
+        display: inline-block;
+        margin-left: 8px;
+      }
+    
+      .tag-input__text {
+        border: none;
+        outline: none;
+        font-size: 1em;
+      line-height: 40px;
+      background: none;
+      }
+</style>

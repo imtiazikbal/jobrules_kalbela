@@ -1,48 +1,45 @@
 <template>
-    <div class="row">
-      <div class="col animated fadeInUp">
-        <nav class="nav nav-tabs nav-fill mb-3" id="nav-tab" role="tablist">
-          <button @click="activeTab = 'latest'" class="nav-item nav-link" :class="{ 'active': activeTab === 'latest' }">
-            <h4> <strong>Latest</strong> </h4>
-          </button>
-          <button @click="fetchPopularPosts()" class="nav-item nav-link" :class="{ 'active': activeTab === 'popular' }"> 
-            <h4> <strong>Popular</strong> </h4> 
-          </button>
-        </nav>
-      </div>
-    </div>
+  <div class="w-full">
+    <nav class="border-b text-sm flex justify-start">
+      <!-- Active class will be applied to Popular link when activeTab is 'popular' -->
+      <a class="inline-block px-4 py-2 border-b-2 border-indigo-600 text-indigo-600 font-semibold" :class="{ 'bg-gray-200': activeTab === 'popular' }" @click="changeTab('popular')" href="#">জনপ্রিয়</a>
   
-    <div class="row">
-      <div class="col">
-        <div class="tab-content" id="nav-tabContent">
-          <div v-if="activeTab === 'latest'" class="tab-pane fade show active animated fadeInUp" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="row">
-              <div v-for="post in latestPosts" :key="post.id" class="col-12">
-                <h3 class="py-1">{{ post.cName }}</h3>
-                <!-- Display other details of the latest post -->
-              </div>
-            </div>
-          </div>
-          <div v-else class="tab-pane fade animated fadeInUp" role="tabpanel" aria-labelledby="nav-popular">
-            <div class="row">
-              <div v-for="post in popularPosts" :key="post.id" class="col-12">
-                <h3>{{ post.sub_category_name }}</h3>
-                <!-- Display other details of the popular post -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </template>
+      <!-- Active class will be applied to Latest link when activeTab is 'latest' -->
+      <a class="inline-block px-4 py-2 text-gray-700 hover:text-black" :class="{ 'bg-gray-200': activeTab === 'latest' }" @click="changeTab('latest')" href="#">সর্বশেষ</a>
+    </nav>
+
+    <!-- Display demo data based on the activeTab value -->
+    <div v-if="activeTab === 'popular'">
+      <!-- Demo data for Popular -->
   
-  <script setup>
-  import { ref, onMounted } from 'vue';
+        <!-- <p>{{ post.sub_category_name }}</p> -->
+        <ul class="nav-item p-0 pl-3"  v-for="post in popularPosts" :key="post.id">
+                
+                <Link  class="nav-link border-bottom p-2 text-secondary">{{  post.sub_category_name}}</Link>
+            </ul>
+ 
+    </div>
+    <div v-else-if="activeTab === 'latest'">
+      <!-- Demo data for Latest -->
+      
+        <ul class="nav-item p-0 pl-3" v-for="post in latestPosts" :key="post.id">
+                
+                <Link  class="nav-link border-bottom p-2 text-secondary">{{ post.cName }}</Link>
+            </ul>
+     
+    </div>
+  </div>
+</template>
+
+<script setup>
+
+
+import { ref, onMounted } from 'vue';
   import axios from 'axios';
   
   const latestPosts = ref([]);
   const popularPosts = ref([]);
-  const activeTab = ref('latest'); // Initially set to 'latest'
+
   
   const fetchLatestPosts = async () => {
     try {
@@ -64,13 +61,19 @@
   };
  
   onMounted(() => {
+    fetchPopularPosts();
     fetchLatestPosts();
    
   });
   
-  </script>
-  
-  <style>
-  /* Add your custom styles here */
-  </style>
-  
+    // Set up a reactive variable to track the active tab
+    const activeTab = ref('popular');
+
+    // Method to change the active tab
+    const changeTab = (tab) => {
+      activeTab.value = tab;
+    };
+
+    
+
+</script>

@@ -3,13 +3,14 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Job;
 use App\Models\News;
 use Inertia\Inertia;
 use App\Models\Category;
-use App\Models\Job;
 use App\Models\MainAssets;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShareDataMiddleware
@@ -26,16 +27,18 @@ class ShareDataMiddleware
         $siteLogo =  MainAssets::first();
         $subCategory = SubCategory::all();
         $scoll = Job::where('scroll','1')->get();
-      
+       
     
-        // Share header data with Inertia
         Inertia::share([
             'feturedNews' => $feturedNews,
             'headerData' => $headerData,
-            'logo'=>$siteLogo,
-            'subCategory'=>$subCategory,
-            'scoll'=>$scoll
+            'logo' => $siteLogo,
+            'subCategory' => $subCategory,
+            'scroll' => $scoll,
         ]);
+
+
+        
         return $next($request);
     }
 }

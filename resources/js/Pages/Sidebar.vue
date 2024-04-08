@@ -49,8 +49,8 @@ id="drawer-navigation"
   </form>
   <ul class="space-y-2">
     <li>
-      <a
-        href="#"
+      <Link
+      href="/dashboard"
         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
       >
         <svg
@@ -63,8 +63,8 @@ id="drawer-navigation"
           <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
           <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
         </svg>
-        <span class="ml-3">Overview</span>
-      </a>
+        <span class="ml-3">Dashboard</span>
+      </Link>
     </li>
     <!-- <li>
       <button
@@ -172,13 +172,13 @@ id="drawer-navigation"
             >All Category</Link
           >
         </li>
-        <!-- <li>
+       <li>
           <Link
             href="/subCategory/index"
             class="flex items-center p-2 pl-11 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
             >Sub Category</Link
           >
-        </li> -->
+        </li>
       </ul>
     </li>
     <!-- <li>

@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\JobPosition;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
 class JobController extends Controller
 {
     /**
@@ -38,7 +38,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+     //dd($request->all());
         $img = $request->file('image');
         $t = time();
         $file_name = $img->getClientOriginalName();
@@ -57,7 +57,8 @@ class JobController extends Controller
             'job_link'=>$request->job_link,
             'job_video'=>$request->video_link,
             'status'=>$request->status,
-            'scroll'=>$request->scroll
+            'scroll'=>$request->scroll,
+            'tag'=>json_encode($request->tags)
         ]);
         return redirect('/admin/jobs')->with('success', 'Jobs created successfully');
     }
@@ -73,9 +74,16 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Job $job)
+    public function edit(Request $request, Job $job)
     {
-        //
+        $jobs = Job::where('id',$request->jobs )->with('category','subcategory','job_position')->first();
+        $sub_category = SubCategory::where('status',true)->get();
+        $category = Category::where('status',true)->get();
+       $job_position = JobPosition::all();
+
+        return Inertia::render('Job/Edit',['jobs' => $jobs, 'job_position' => $job_position, 'sub_category' => $sub_category, 'category' => $category]);
+
+        
     }
 
     /**
@@ -83,14 +91,53 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        //
+       //dd($request->all());
+       if($request->hasFile('image')){
+        $img = $request->file('image');
+        $t = time();
+        $file_name = $img->getClientOriginalName();
+        $img_name = "job-{$t}-{$file_name}";
+        $img_url = "uploads/job/{$img_name}";
+        // Upload File
+        $img->move(public_path('uploads/job'), $img_name);
+        $job->update([
+            'title'=>$request->title,
+            'des'=>$request->des,
+            'image'=>$img_url,
+            'category_id'=>$request->category_id,
+            'sub_category_id'=>$request->sub_category_id,
+            'job_position_id'=>$request->job_position_id,
+            'job_link'=>$request->job_link,
+            'job_video'=>$request->video_link,
+            'status'=>$request->status,
+            'scroll'=>$request->scroll
+        ]);
+        return redirect('/admin/jobs')->with('success', 'Jobs Updated successfully');
+    }else{
+        $job->update([
+            'title'=>$request->title,
+            'des'=>$request->des,
+            'category_id'=>$request->category_id,
+            'sub_category_id'=>$request->sub_category_id,
+            'job_position_id'=>$request->job_position_id,
+            'job_link'=>$request->job_link,
+            'job_video'=>$request->video_link,
+            'status'=>$request->status,
+            'scroll'=>$request->scroll,
+            'image'=>$job->image
+        ]);
+        return redirect('/admin/jobs')->with('success', 'Jobs Updated successfully');
+
+    }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Job $job)
+    public function destroy(Request $request, Job $job)
     {
-        //
+       File::delete($job->image);
+       Job::where('id',$request->jobs)->delete();
+        return redirect('/admin/jobs')->with('warning', 'Jobs Deleted successfully');
     }
 }

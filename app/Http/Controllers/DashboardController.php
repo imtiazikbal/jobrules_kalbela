@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\News;
+use Inertia\Inertia;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,5 +19,14 @@ class DashboardController extends Controller
             return view('dashboard',compact('jobsCount'));
         }
        
+    }
+
+    function dashboard(Request $request){
+
+        $tJobs = Job::where('status',true)->count();
+        $tCategory = Category::where('status',true)->count();
+        $tSubCategory = SubCategory::where('status',true)->count();
+        return Inertia::render('Dashboard',['tJobs' => $tJobs,'tCategory' => $tCategory,'tSubCategory' => $tSubCategory]);
+        
     }
 }

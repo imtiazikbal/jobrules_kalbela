@@ -31,7 +31,7 @@ defineProps({
            
         </template>
     <main class="p-4 md:ml-64 h-auto pt-20">
-      <div v-if="$page.props.flash.success" class="absolute top-20 right-10 z-10">
+      <div v-if="$page.props.flash.success" class="absolute top-20 right-30 z-10">
            <Notification :message="$page.props.flash.success"/>
            </div>
 
@@ -51,7 +51,7 @@ defineProps({
 <section class="relative py-16 bg-blueGray-50">
 <div class="w-full mb-12 px-4">
   <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded 
-  bg-pink-900 text-white">
+  bg-gray-900 text-white">
     <div class="rounded-t mb-0 px-4 py-3 border-0">
       <div class="flex flex-wrap items-center">
         <div class="relative w-full px-4 max-w-full flex-grow flex-1 ">
@@ -96,7 +96,7 @@ Add Job
            
             <td>
               <Link  :href="`/edit/job/${job.id}`" class="btn btn-primary mr-2">Edit</Link>
-              <Link  :href="`/edit/job/${job.id}`" class="btn btn-danger">Delete</Link>
+              <Link  :href="`/destroy/job/${job.id}`" class="btn btn-danger">Delete</Link>
 
             </td>
           
@@ -113,7 +113,7 @@ Add Job
         <div class="flex flex-wrap items-center md:justify-between justify-center">
           <div class="w-full md:w-6/12 px-4 mx-auto text-center">
             <div class="text-sm text-blueGray-500 font-semibold py-1">
-              Made with <a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" class="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
+              Made By <a href="https://www.digitalsolutions.ltd/" class="text-blueGray-500 hover:text-gray-800" target="_blank">Digital  Solutions Limited</a> .
             </div>
           </div>
         </div>
