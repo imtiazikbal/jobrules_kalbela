@@ -34,23 +34,20 @@
 
     })
 
-    const form = useForm({
-        title: null,
-        des: null,
-        image: null,
-        scroll: null,
-        job_link: "#",
-        video_link: "#",
-        category_id: null,
-        sub_category_id: null,
-        job_position_id: null,
-        status: null,
-        tag: null
-
-
-
-
-    })
+   
+const form = useForm({
+  title: null,
+  des: null,
+  image: null,
+  scroll: null,
+  job_link: "#",
+  video_link: "#",
+  category_id: null,
+  sub_category_id: null,
+  job_position_id: null,
+  status: null,
+  tag: []
+});
     const previewImageUrl = ref('');
 
     const handleFileInputChange = (event) => {
@@ -105,15 +102,25 @@
 
     const value = ref('<div>জব ডেসক্রিপশন এখানে লিখুন</div>');
 
-    const tags = ref(['এখানে tag লিখুন']);
 
-const addTag = (event) => {
+
+    const tags = ref([]);
+
+
+    const addTag = (event) => {
   event.preventDefault();
   let val = event.target.value.trim();
-  if (val.length > 0 && !tags.value.includes(val)) {
+  if (val.length > 0) {
+    if (tags.value.length >= 1) {
+      for (let i = 0; i < tags.value.length; i++) {
+        if (tags.value[i] === val) {
+          return false;
+        }
+      }
+    }
     tags.value.push(val);
     event.target.value = '';
-    console.log(tags.value);
+   form.tag = tags.value
   }
 };
 
@@ -126,24 +133,13 @@ const removeLastTag = (event) => {
     removeTag(tags.value.length - 1);
   }
 };
+
+
+
 </script>
 
 
-<style>
-    element {
-        width: 300px;
-        height: 300px;
-    }
 
-    @media screen and (max-width: 768px) {
-        .form_class {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-</style>
 <template>
 
     <Head title="Jobs" />
@@ -197,22 +193,33 @@ const removeLastTag = (event) => {
                                 <div class="col-md-12 mt-3 ">
                                     <label for="">Job Tag</label>
                                     
-                                    <div class='tag-input'>
-                                        <div v-for='(tag, index) in tags' :key='tag' class='tag-input__tag'>
-                                            {{ tag }}
-                                            <span @click='removeTag(index)'>x</span>
-                                        </div>
-                                        <input type='text' v-model='form.tag' placeholder="Enter a Tag" class='tag-input__text border-none'
-                                            @keydown.enter='addTag' @keydown.188='addTag'
-                                            @keydown.delete='removeLastTag' />
-                                    </div>
+                                    <div class="container">
+    <div class='tag-input'>
+      <div v-for='(tag, index) in tags' :key='tag' class='tag-input__tag'>
+        {{ tag }}
+        <span @click='removeTag(index)'>x</span>
+      </div>
+      <input
+        type='text'
+        placeholder="Enter a Tag"
+        class='tag-input__text'
+        @keydown.enter='addTag'
+        @keydown.188='addTag'
+        @keydown.delete='removeLastTag'
+        v-model="form.tag"
+      />
+    </div>
+   
+  </div>
                                 </div>
+                                
 
 
                             </div>
 
 
                         </div>
+                        
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="col-md-12 px-2">
@@ -446,4 +453,17 @@ const removeLastTag = (event) => {
       line-height: 40px;
       background: none;
       }
+      element {
+        width: 300px;
+        height: 300px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .form_class {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
 </style>

@@ -45,7 +45,9 @@ const custoImage = props.jobs.image;
         category_id: props.jobs.category_id,
         sub_category_id: props.jobs.sub_category_id,
         job_position_id: props.jobs.job_position_id,
-        status: props.jobs.status
+        status: props.jobs.status,
+        tag: [],
+    
 
 
 
@@ -125,15 +127,30 @@ const custoImage = props.jobs.image;
     const value = ref('<div>জব ডেসক্রিপশন এখানে লিখুন</div>');
 
     
-    const tags = ref(['এখানে tag লিখুন']);
+   
 
-const addTag = (event) => {
+    const tags = ref([]);
+    if(props.jobs.tag){
+        props.jobs.tag = props.jobs.tag.split(',')
+
+        tags.value = props.jobs.tag
+    }
+
+
+    const addTag = (event) => {
   event.preventDefault();
   let val = event.target.value.trim();
-  if (val.length > 0 && !tags.value.includes(val)) {
+  if (val.length > 0) {
+    if (tags.value.length >= 1) {
+      for (let i = 0; i < tags.value.length; i++) {
+        if (tags.value[i] === val) {
+          return false;
+        }
+      }
+    }
     tags.value.push(val);
     event.target.value = '';
-    console.log(tags.value);
+   form.tag = tags.value
   }
 };
 
@@ -146,6 +163,7 @@ const removeLastTag = (event) => {
     removeTag(tags.value.length - 1);
   }
 };
+
 </script>
 
 
@@ -218,15 +236,24 @@ const removeLastTag = (event) => {
                                 <div class="col-md-12 mt-3 ">
                                     <label for="">Job Tag</label>
                                     
-                                    <div class='tag-input'>
-                                        <div v-for='(tag, index) in tags' :key='tag' class='tag-input__tag'>
-                                            {{ tag }}
-                                            <span @click='removeTag(index)'>x</span>
-                                        </div>
-                                        <input type='text' v-model='form.tag' placeholder="Enter a Tag" class='tag-input__text border-none'
-                                            @keydown.enter='addTag' @keydown.188='addTag'
-                                            @keydown.delete='removeLastTag' />
-                                    </div>
+                                    <div class="container">
+    <div class='tag-input'>
+      <div v-for='(tag, index) in tags' :key='tag' class='tag-input__tag'>
+        {{ tag }}
+        <span @click='removeTag(index)'>x</span>
+      </div>
+      <input
+        type='text'
+        placeholder="Enter a Tag"
+        class='tag-input__text'
+        @keydown.enter='addTag'
+        @keydown.188='addTag'
+        @keydown.delete='removeLastTag'
+        v-model="form.tag"
+      />
+    </div>
+   
+  </div>
                                 </div>
 
 
@@ -407,3 +434,75 @@ const removeLastTag = (event) => {
     </AuthenticatedLayout>
 
 </template>
+<style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap');
+      
+     
+      a {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #00003a;
+      font-size: 20px;
+    }
+      
+      
+    /*tag input style*/
+      
+      .tag-input {
+        width: 50%;
+        border: 1px solid #D9DFE7;
+        background: #fff;
+        border-radius: 4px;
+        font-size: 0.9em;
+        min-height: 45px;
+        box-sizing: border-box;
+        padding: 0 10px;
+        font-family: "Roboto";
+        margin-bottom: 10px;
+      }
+    
+      .tag-input__tag {
+        height: 24px;
+        color: white;
+        float: left;
+        font-size: 14px;
+        margin-right: 10px;
+        background-color: #667EEA;
+        border-radius: 15px;
+        margin-top: 10px;
+        line-height: 24px;
+        padding: 0 8px;
+        font-family: "Roboto";
+      }
+    
+      .tag-input__tag > span {
+        cursor: pointer;
+        opacity: 0.75;
+        display: inline-block;
+        margin-left: 8px;
+      }
+    
+      .tag-input__text {
+        border: none;
+        outline: none;
+        font-size: 1em;
+      line-height: 40px;
+      background: none;
+      }
+      element {
+        width: 300px;
+        height: 300px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .form_class {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>

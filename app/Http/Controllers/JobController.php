@@ -41,8 +41,9 @@ class JobController extends Controller
      //dd($request->all());
         $img = $request->file('image');
         $t = time();
+        $d= date('Y-m-d');
         $file_name = $img->getClientOriginalName();
-        $img_name = "job-{$t}-{$file_name}";
+        $img_name = "job_rules-{$d}-{$t}-{$file_name}";
         $img_url = "uploads/job/{$img_name}";
         // Upload File
         $img->move(public_path('uploads/job'), $img_name);
@@ -58,7 +59,7 @@ class JobController extends Controller
             'job_video'=>$request->video_link,
             'status'=>$request->status,
             'scroll'=>$request->scroll,
-            'tag'=>json_encode($request->tags)
+            'tag'=>json_encode($request->tag)
         ]);
         return redirect('/admin/jobs')->with('success', 'Jobs created successfully');
     }
@@ -110,7 +111,10 @@ class JobController extends Controller
             'job_link'=>$request->job_link,
             'job_video'=>$request->video_link,
             'status'=>$request->status,
-            'scroll'=>$request->scroll
+            'scroll'=>$request->scroll,
+         
+            'tag'=>json_encode($request->tag)
+         
         ]);
         return redirect('/admin/jobs')->with('success', 'Jobs Updated successfully');
     }else{
@@ -124,7 +128,8 @@ class JobController extends Controller
             'job_video'=>$request->video_link,
             'status'=>$request->status,
             'scroll'=>$request->scroll,
-            'image'=>$job->image
+            'image'=>$job->image,
+            'tag'=>json_encode($request->tag)
         ]);
         return redirect('/admin/jobs')->with('success', 'Jobs Updated successfully');
 
@@ -138,6 +143,12 @@ class JobController extends Controller
     {
        File::delete($job->image);
        Job::where('id',$request->jobs)->delete();
-        return redirect('/admin/jobs')->with('warning', 'Jobs Deleted successfully');
+        return redirect('/admin/jobs')->with('success', 'Jobs Deleted successfully');
+    }
+
+    function jobTypeApi(Request $request){
+
+        $jobs = Job::where('job_position_id', $request->type)->get();
+        return $jobs;
     }
 }

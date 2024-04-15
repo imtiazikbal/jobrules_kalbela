@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\SubCategoryController;
 use App\Models\SubCategory;
 
@@ -19,7 +20,7 @@ use App\Models\SubCategory;
 Route::get('/getCategory',[SubCategoryController::class,'getCategory']);
 Route::get('/getSubCategory',[SubCategoryController::class,'subCategory']);
 Route::get('/getSubCategory/{id}',[SubCategoryController::class,'getSubCategory']);
-
+Route::get('/jobType/{type}',[JobController::class,'jobTypeApi'])->name('jobTypeApi');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

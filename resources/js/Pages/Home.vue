@@ -25,6 +25,7 @@
     })
 </script>
 <template>
+   <Head title="Job Rules" />
     <FontendLayout>
         <div class="container">
             <!-- <div class="container-fluid cbackgraund">
